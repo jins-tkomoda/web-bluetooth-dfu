@@ -22,7 +22,8 @@ export interface BluetoothLEScanFilterInit {
  */
 export declare class SecureDfu extends EventDispatcher {
     private crc32;
-    private bluetooth;
+    private bluetooth?;
+    private delay;
     /**
      * DFU Service unique identifier
      */
@@ -44,21 +45,23 @@ export declare class SecureDfu extends EventDispatcher {
      * Characteristic constructor
      * @param bluetooth A bluetooth instance
      * @param crc32 A CRC32 function
+     * @param delay Milliseconds of delay between packets
      */
-    constructor(crc32: (data: Array<number> | Uint8Array, seed?: number) => number, bluetooth?: Bluetooth);
-    private log(message);
-    private progress(bytes);
-    private connect(device);
-    private gattConnect(device);
-    private handleNotification(event);
-    private sendOperation(characteristic, operation, buffer?);
-    private sendControl(operation, buffer?);
-    private transferInit(buffer);
-    private transferFirmware(buffer);
-    private transfer(buffer, type, selectType, createType);
-    private transferObject(buffer, createType, maxSize, offset);
-    private transferData(data, offset, start?);
-    private checkCrc(buffer, crc);
+    constructor(crc32: (data: Array<number> | Uint8Array, seed?: number) => number, bluetooth?: Bluetooth, delay?: number);
+    private log;
+    private progress;
+    private connect;
+    private gattConnect;
+    private handleNotification;
+    private sendOperation;
+    private sendControl;
+    private transferInit;
+    private transferFirmware;
+    private transfer;
+    private transferObject;
+    private transferData;
+    private checkCrc;
+    private delayPromise;
     /**
      * Scans for a device to update
      * @param buttonLess Scans for all devices and will automatically call `setDfuMode`
