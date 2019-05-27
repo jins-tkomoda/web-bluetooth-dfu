@@ -17,6 +17,12 @@ export interface BluetoothLEScanFilterInit {
      */
     namePrefix?: string;
 }
+export interface UuidOptions {
+    service?: number | string;
+    button?: number | string;
+    control?: number | string;
+    packet?: number | string;
+}
 /**
  * Secure Device Firmware Update class
  */
@@ -38,6 +44,7 @@ export declare class SecureDfu extends EventDispatcher {
      * @event
      */
     static EVENT_PROGRESS: string;
+    private DEFAULT_UUIDS;
     private notifyFns;
     private controlChar;
     private packetChar;
@@ -66,15 +73,17 @@ export declare class SecureDfu extends EventDispatcher {
      * Scans for a device to update
      * @param buttonLess Scans for all devices and will automatically call `setDfuMode`
      * @param filters Alternative filters to use when scanning
+     * @param uuids Optional alternative uuids for service, control, packet or button
      * @returns Promise containing the device
      */
-    requestDevice(buttonLess: boolean, filters: Array<BluetoothLEScanFilterInit>): Promise<BluetoothDevice>;
+    requestDevice(buttonLess: boolean, filters: Array<BluetoothLEScanFilterInit>, uuids?: UuidOptions): Promise<BluetoothDevice>;
     /**
      * Sets the DFU mode of a device, preparing it for update
      * @param device The device to switch mode
+     * @param uuids Optional alternative uuids for control, packet or button
      * @returns Promise containing the device if it is still on a valid state
      */
-    setDfuMode(device: BluetoothDevice): Promise<BluetoothDevice>;
+    setDfuMode(device: BluetoothDevice, uuids?: UuidOptions): Promise<BluetoothDevice>;
     /**
      * Updates a device
      * @param device The device to switch mode
